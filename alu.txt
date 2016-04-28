@@ -1,0 +1,69 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date:    16:18:40 04/27/2016 
+-- Design Name: 
+-- Module Name:    alu - Behavioral 
+-- Project Name: 
+-- Target Devices: 
+-- Tool versions: 
+-- Description: 
+--
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+-- Additional Comments: 
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity alu is
+    Port ( alu_aluop : in  STD_LOGIC_VECTOR (5 downto 0);
+           alu_crs1 : in  STD_LOGIC_VECTOR (31 downto 0);
+           alu_mpx : in  STD_LOGIC_VECTOR (31 downto 0);
+           alu_out : out  STD_LOGIC_VECTOR (31 downto 0));
+end alu;
+
+architecture Behavioral of alu is
+
+begin
+process(alu_crs1,alu_mpx,alu_aluop)
+	begin
+	   case (alu_aluop) is 
+			when "000000" => -- ADD
+				alu_out <= alu_crs1 + alu_mpx;			
+			when "000001" => -- SUB
+				alu_out <= alu_crs1 - alu_mpx;
+			when "000010" => --AND
+				alu_out <= alu_crs1 and alu_mpx;				
+			when "000011" => --ANDN
+				alu_out <= alu_crs1 and not alu_mpx;
+			when "000100" => -- OR
+				alu_out <= alu_crs1 or alu_mpx;
+			when "000101" => -- ORN
+				alu_out <= alu_crs1 or not alu_mpx;
+			--when "000110" => -- XOR
+			--	alu_out <= alu_crs1 xor alu_mpx
+			--when "000111" => -- XORN
+			--	alu_out <= alu_crs1 xor not alu_mpx			
+			when others => -- Cae el nop
+				alu_out <= (others=>'0');
+		end case;
+	end process;
+
+
+end Behavioral;
+
